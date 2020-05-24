@@ -1,11 +1,11 @@
 const request = require("request-promise");
 
-//const API_KEY = e89d70cba7027a5a8a112a26781a5ad1;
+//const API_KEY = "";
 
 class Weather {
   static retrieveByCity(city, callback) {
     request({
-      uri: `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=e89d70cba7027a5a8a112a26781a5ad1&units=imperial`,
+      uri: `https://api.openweathermap.org/data/2.5/weather?q=${city}&APPID=API_KEY&units=imperial`,
       json: true,
     })
       .then(function (res) {
