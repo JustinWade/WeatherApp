@@ -1,3 +1,4 @@
+//Functional component for weather data
 import React from "react";
 import { Row, Col, Table } from "reactstrap";
 

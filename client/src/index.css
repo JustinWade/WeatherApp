@@ -4,6 +4,20 @@ body {
   font-family: sans-serif;
 }
 
+.form-group {
+  width: 275px;
+  margin: 0px auto;
+}
+
+.input-group {
+  width: 275px;
+  margin: 0px auto;
+}
+
 .centered {
   text-align: center;
+}
+
+.weather {
+  margin-top: 30px;
 }

@@ -8,8 +8,13 @@ import {
   Col,
   Jumbotron,
   InputGroup,
+  InputGroupAddon,
+  FormGroup,
+  Button,
   Input,
 } from "reactstrap";
+
+//import weather component
 import Weather from "./Weather";
 
 class App extends Component {
@@ -33,7 +38,34 @@ class App extends Component {
       });
   };
 
-  handleInputChange = e;
+  handleInputChange = (e) => {
+    this.setState({ newCityName: e.target.value });
+  };
+
+  handleAddCity = () => {
+    fetch("/api/cities", {
+      method: "post",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ city: this.state.newCityName }),
+    })
+      .then((res) => res.json())
+      .then((res) => {
+        this.getCityList();
+        this.setState({ newCityName: "" });
+      });
+  };
+
+  getWeather = (city) => {
+    fetch(`/api/weather${city}`)
+      .then((res) => res.json())
+      .then((weather) => {
+        this.setState({ weather });
+      });
+  };
+
+  handleChangeCity = (e) => {
+    this.getWeather(e.target.value);
+  };
 
   componentDidMount() {
     this.getCityList();
@@ -52,14 +84,26 @@ class App extends Component {
               <p className="lead">
                 The current weather forecast from cities around the world.
               </p>
+              <InputGroup>
+                <Input
+                  placeholder="City name..."
+                  value={this.state.newCityName}
+                  onChange={this.handleInputChange}
+                />
+                <InputGroupAddon addonType="append"></InputGroupAddon>
+                <Button color="primary" onClick={this.handleAddCity}>
+                  Add City
+                </Button>
+              </InputGroup>
             </Jumbotron>
-            <InputGroup>
-              <Input
-                placeholder="City name..."
-                value={this.state.newCityName}
-                onChange={this.handleInputChange}
-              />
-            </InputGroup>
+          </Col>
+        </Row>
+        <Row>
+          <Col>
+            <h1 className="display-5">Current Weather</h1>
+            <FormGroup>
+              <Input type="select" onChange={this.handleChangeCity}></Input>
+            </FormGroup>
           </Col>
         </Row>
         <Weather />
